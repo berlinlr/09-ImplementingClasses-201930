@@ -271,7 +271,7 @@ def run_test_clone():
         print('Actual for p3:  ', p3)
    """
     # -------------------------------------------------------------------------
-    # TODO: 5.  Follow the same instructions as in _TODO_ 3 above,
+    # DONE: 5.  Follow the same instructions as in _TODO_ 3 above,
     #           but for the  clone  method specified above.
     # -------------------------------------------------------------------------
     print()
