@@ -6,7 +6,7 @@ Authors: David Mutchler, Vibha Alangar, Matt Boutell, Dave Fisher,
          Mark Hays, Amanda Stouder, Aaron Wilkin, their colleagues,
          and Landen Berlin.
 """  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
-
+import math
 
 def main():
     """ Calls the   TEST   functions in this module. """
@@ -49,11 +49,55 @@ class Point(object):
     def __init__(self,x,y):
         self.x=x
         self.y=y
+        self.moves = 0
+        self.start_pointx = x
+        self.start_pointy = y
+        self.distance_travled = 0
     def __repr__(self):
         return"Point({},{})".format(self.x,self.y)
 
     def clone(self):
         return Point(self.x,self.y)
+
+    def move_to(self, x, y):
+        self.distance_travled += self.get_distance_from(Point(x, y))
+        self.x = x
+        self.y = y
+        self.move= self.move + 1
+        return self.distance_travled
+
+    def move_by(self, dx, dy):
+        self.x = self.x + dx
+        self.y = self.y + dy
+        self.moves = self.moves + 1
+        self.distance_traveled += self.get_distance_from(Point(self.x + dx, self.y + dy))
+        return self.distance_traveled
+
+    def get_number_of_moves_made(self):
+        return self.moves
+
+    def get_distance_from(self, point):
+        return math.sqrt(abs((self.x - point.x))**2 + (abs((self.y - point.y)))**2)
+
+    def get_distance_from_start(self):
+        return math.sqrt(abs((self.x - self.start_pointx))**2 + (abs((self.y - self.start_pointy)))**2)
+
+    def get_distance_traveled(self):
+        return self.distance_traveled
+
+    def closer_to(self, point1, point2):
+        x = self.get_distance_from(point1)
+        y = self.get_distance_from(point2)
+        if x > y:
+            return point2
+        if y > x:
+            return point1
+        if x == y:
+            return point1
+
+    def halfway_to(self, point):
+        return (Point(((self.x + point.x)/2), ((self.y + point.y)/2)))
+
 
 
 
@@ -375,6 +419,39 @@ def run_test_move_to():
     print('-----------------------------------------------------------')
     print('Testing the   move_to   method of the Point class.')
     print('-----------------------------------------------------------')
+
+    p1 = Point(10, 8)
+    p2 = Point(50, 20)
+    print()
+    print('Expected for p1: Point(10, 8)')
+    print('Actual for p1:  ', p1)
+    print('Expected for p2: Point(50, 20)')
+    print('Actual for p2:  ', p2)
+
+    p1.move_to(5, -1)
+    p2.move_to(0, 0)
+    print()
+    print('Expected for p1: Point(5, -1)')
+    print('Actual for p1:  ', p1)
+    print('Expected for p2: Point(0, 0)')
+    print('Actual for p2:  ', p2)
+
+    p2.y = 99
+    print()
+    print('Expected for p1: Point(5, -1)')
+    print('Actual for p1:  ', p1)
+    print('Expected for p2: Point(0, 99)')
+    print('Actual for p2:  ', p2)
+
+    check_has_no_return = p2.move_to(0, 222)
+    print()
+    print('Expected for p1: Point(5, -1)')
+    print('Actual for p1:  ', p1)
+    print('Expected for p2: Point(0, 222)')
+    print('Actual for p2:  ', p2)
+    if check_has_no_return is not None:
+        print('** FAILED: This method should NOT return an explicit')
+        print('** value; in fact, it returned:', check_has_no_return)
 
 
 def run_test_move_by():
